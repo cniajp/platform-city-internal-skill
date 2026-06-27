@@ -5,7 +5,9 @@ description: >-
   `platform-city/manifests/` のコンポーネント（共有 Gateway・監視スタック・LBC・GatewayClass 等）
   を追加・更新・トラブルシュートするとき、新しいアプリを共有 ALB で公開するとき、ArgoCD の
   同期状態を確認・修復するとき、クラスタを初回ブートストラップするときに使う。クラスタ全体スコープの
-  作業向け（アプリ作者の単一 namespace 作業ではない）。
+  作業向け（アプリ作者の単一 namespace 作業ではない）。manifests / ArgoCD / Application /
+  共有 Gateway / HTTPRoute / sync-wave / Helm values など Platform City の基盤に触れる作業では、
+  明示的に指示されなくても本スキルを参照すること。
 ---
 
 # ArgoCD / GitOps 運用（基盤 manifests）
@@ -21,7 +23,9 @@ Platform City の**プラットフォーム基盤**を ArgoCD で宣言的に管
 
 ローカル参照先（環境による）: `/Users/kkusama/workspace/cnia/platform-city/`
 
-## 黄金律（破ってはいけない）
+## 運用の原則（なぜそうするか）
+
+この基盤は「git を単一の真実とし、ArgoCD がそこへ収束させ続ける」前提で組まれている。以下はその前提を壊さないための原則。理由とセットで理解しておくと応用が利く。
 
 1. **すべて宣言的に。git が単一の真実。** クラスタ変更は git 経由（push → ArgoCD 自動同期）。`kubectl apply` の直叩き・`kubectl edit` での手当ては**しない**（selfHeal で巻き戻り、ドリフトの元）。
 2. **バージョンは必ず固定**（chart / CRD / コントローラ）。`latest` や floating tag は使わない。更新も git の変更（PR）として扱う。
@@ -31,7 +35,7 @@ Platform City の**プラットフォーム基盤**を ArgoCD で宣言的に管
 
 ## エージェント実行時の注意
 
-- 変更はファイル編集 → PR が基本。**`kubectl apply`/`edit` を実行しない**（黄金律1）。状態確認の read-only な `kubectl get` はよい。
+- 変更はファイル編集 → PR が基本。**`kubectl apply`/`edit` を実行しない**（原則1）。状態確認の read-only な `kubectl get` はよい。
 - ブートストラップや手動同期など破壊的・特権操作は**実行前にユーザーへ確認**し、`platform-city-eks-cluster-admin` ロールが必要な点を伝える（→ [`the-plat-onboarding`](../the-plat-onboarding/SKILL.md)）。
 - バージョンを上げる提案をするときは固定値で書く。`latest` を書かない。
 
