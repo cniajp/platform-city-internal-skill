@@ -27,7 +27,7 @@ Platform Engineering Kaigi 2026（PEK2026）の目玉企画 **Platform City** �
 | スキル | 状態 | いつ使うか | スコープ |
 |---|---|---|---|
 | [`the-plat-onboarding`](./the-plat-onboarding/) | ✅ 作成済み | EKS クラスタに初めてアクセスする／kubectl が認証エラーのとき | 自分の開発環境 |
-| `the-plat-app-guardrails` | 🚧 予定 | The Plat 上で**アプリを作る**とき（守るべき制約） | 単一 namespace |
+| [`the-plat-app-guardrails`](./the-plat-app-guardrails/) | ✅ 作成済み | The Plat 上で**アプリを作る**とき（守るべき制約） | 単一 namespace |
 | [`argocd-gitops-ops`](./argocd-gitops-ops/) | ✅ 作成済み | The Plat の**基盤 manifests を運用**するとき | クラスタ全体 |
 
 **迷ったときの導線**
